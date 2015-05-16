@@ -1,4 +1,4 @@
-from asynclib import base_events
+from asynclib import base_events, events
 from asynclib import locks
 from asynclib.coroutines import coroutine
 

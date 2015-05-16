@@ -1,10 +1,17 @@
 """Event loop."""
+from .tasks import Task
 
 class EventLoop:
     def __init__(self):
         self.ready = []
+        self.call_soon_queue = []
         self.running = False
+    def call_soon(self, fn):
+        self.call_soon_queue.append(fn)
     def _run_one_step(self):
+        while self.call_soon_queue:
+            fn = self.call_soon_queue.pop(0)
+            fn()
         if not self.ready:
             return
         current = self.ready[0]
@@ -36,8 +43,10 @@ class EventLoop:
         if coro in self.ready:
             self.ready.remove(coro)
     def create_task(self, coro):
-        self.schedule(coro)
+        t = Task(coro, loop=self) # self.schedule(coro)
     def get_debug(self):
         return False
+    def call_exception_handler(self, *args):
+        print(args)
 
 loop = EventLoop()

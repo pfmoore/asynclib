@@ -1,0 +1,40 @@
+-a---        08/02/2015     10:41      46125 base_events.py
+-a---        08/02/2015     10:41       8669 base_subprocess.py
+-a---        24/11/2013     18:57        202 constants.py
+-a---        08/02/2015     10:41       6438 coroutines.py
+-a---        08/02/2015     10:41      19829 events.py
+-a---        08/02/2015     10:41      15034 futures.py
+-a---        21/09/2014     21:05      14877 locks.py
+-a---        20/10/2013     19:18        131 log.py
+-a---        08/02/2015     10:41      20671 proactor_events.py
+-a---        08/02/2015     10:41       4646 protocols.py
+-a---        08/02/2015     10:41       9731 queues.py
+-a---        08/02/2015     10:41      40190 selector_events.py
+-a---        08/02/2015     10:41      25665 sslproto.py
+-a---        08/02/2015     10:41      16653 streams.py
+-a---        08/02/2015     10:41       7438 subprocess.py
+-a---        08/02/2015     10:41      23694 tasks.py
+-a---        08/02/2015     10:41      13000 test_utils.py
+-a---        08/02/2015     10:41      10241 transports.py
+-a---        08/02/2015     10:41      35331 unix_events.py
+-a---        08/02/2015     10:41      28471 windows_events.py
+-a---        08/02/2015     10:41       7067 windows_utils.py
+-a---        08/02/2015     10:41       1486 __init__.py
+
+events:
+    get_event_loop
+        used throughout to supply the default for a loop arg
+    _get_function_source/_format_callback/_format_args
+        (standalone) in coroutines (gfs) and futures (fc)
+
+futures, locks, queues, tasks, coroutines:
+    independent (but linked)
+    queues use locks
+    tasks use queues
+    queues use tasks
+    locks use coroutines for @coroutine
+    tasks use coroutines including @coroutine
+    all use futures
+
+A future is an object that can be waited on, and which can be signaled
+as complete returning a given result or exception.
